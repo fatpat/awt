@@ -1,0 +1,20 @@
+/*
+.group {
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+}
+*/
+
+section.page {
+  h1 {
+    text-align: center;
+    border-top: thin solid black;
+  }
+}
+
+
+.pane-main-menu .main-menu li {
+    margin-right: 0;
+    margin-left: 0;
+}

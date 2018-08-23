@@ -1,1 +1,44 @@
-theme: jekyll-theme-hacker
+# site settings
+title: Sonchaux AWT 2018 Finals
+subtitle: Live Scoring
+email: jerome@loyet.net
+description: Live Scoring for Aerobatics World Tour 2018 Finals at Sonchaux AcroShow
+author: Jérôme LOYET
+logo: assets/images/logo_for_dark.png
+social:
+  name: Coccin'ailes
+  links:
+    - https://www.facebook.com/groups/aerobaticparaglidingworld/
+#google_site_verification: 
+lang: fr_FR
+
+#collections:
+#  - decollages
+#  - atterrissages
+
+# social settings
+500px_url:
+youtube_url: 
+facebook_url: https://www.facebook.com/groups/aerobaticparaglidingworld/
+github_url:
+gitlab_url:
+googleplus_url:
+instagram_url:
+linkedin_url:
+pinterest_url:
+slack_url:
+twitter_url: 
+
+# google_analytics: UA-114191466-1
+
+# build settings
+markdown: kramdown
+exclude: [CNAME, Gemfile*]
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-redirect-from
+
+sass:
+  style: compressed
+

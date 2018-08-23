@@ -1,0 +1,36 @@
+---
+---
+
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/skel';
+@import 'fontawesome-5.2.0.all.css';
+@import url('https://fonts.googleapis.com/css?family=Abel|Herr+Von+Muellerhoff|Holtwood+One+SC|Istok+Web|Kaushan+Script|Roboto|Roboto+Condensed|Ubuntu|Ubuntu+Condensed|Ubuntu+Mono');
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300,700,300italic,700italic|Source+Sans+Pro:900');
+
+@include skel-breakpoints((
+  xlarge: '(max-width: 1680px)',
+  large: '(max-width: 1280px)',
+  medium: '(max-width: 980px)',
+  small: '(max-width: 736px)',
+  xsmall: '(max-width: 480px)',
+  xxsmall: '(max-width: 360px)'
+));
+
+@mixin color($p) {
+  @include color-typography($p);
+  @include color-box($p);
+  @include color-button($p);
+  @include color-form($p);
+  @include color-list($p);
+  @include color-section($p);
+  @include color-table($p);
+  @include color-pagination($p);
+}
+
+// AWT
+@import 'colors';
+@import 'svg';
+@import 'groups';
+@import 'main';

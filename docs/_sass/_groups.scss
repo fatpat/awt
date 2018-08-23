@@ -1,0 +1,65 @@
+.results {
+  @include vendor('align-items', 'stretch');
+  @include vendor('display', 'flex');
+  @include vendor('flex-direction', 'row');
+  @include vendor('justify-content', 'space-around');
+  position: relative;
+
+  ol,ul {
+    counter-reset: list;
+    list-style: none;
+    li {
+      counter-increment: list;
+      margin-top: 2vw;
+      margin-bottom: 2vw;
+      padding-left: 3vw;
+      line-height: 3vw;
+      position: relative;
+      font-size: 1.5vw;
+      &:before {
+        content: counter(list,decimal);
+        font-family: 'rift',sans-serif;
+        font-weight: 700;
+        font-size: 3vw;
+        color: #00aeef;
+        position: absolute;
+        top: -0.5vw;
+        left: 0.5vw;
+      }
+    }
+  }
+}
+
+.group {
+
+//  border-left: thin solid #093f89;
+  &:first-child {
+    border-left: none;
+  }
+
+  > h3 {
+    text-align: center;
+    font-size: 3vw;
+    margin-bottom: 0;
+    color: #093f89;
+  }
+
+  > p {
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 0 0 0;
+    line-height: 2vw;
+    font-size: 1.5vw;
+    margin-top: 2vh;
+  }
+}
+
+#results {
+  ol {
+    li {
+      padding-left: 5vw;
+      &:before {
+      }
+    }
+  }
+}

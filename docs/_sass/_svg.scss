@@ -1,0 +1,103 @@
+
+div.svg {
+  width: 100;
+  text-align: center;
+  height: auto;
+  svg {
+    width: 99%;
+    margin: auto;
+    height: auto;
+  }
+}
+
+
+text {
+  text-anchor: middle;
+  fill: $color-active;
+
+  font-family: 'ingra',sans-serif;
+  font-weight: 200;
+
+  //text-transform: uppercase;
+}
+
+text.title {
+  font-weight: bold;
+  font-size: 20px;
+  fill: $color-neutral;
+}
+
+text.title_run {
+  font-family: 'rift',sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+  fill: $color_fai;
+}
+
+text {
+  &.ongoing {
+    fill: $color_active;
+  }
+  &.finished {
+    fill: $color_fai;
+  }
+}
+
+text.title_group {
+  font-family: 'rift',sans-serif;
+  font-weight: 700;
+  font-size: 40px;
+//  font-size: 3vw;
+  fill: $color_fai;
+}
+
+rect {
+  fill-opacity: 0;
+  stroke: $color-fai;
+  &.announced {
+    fill-opacity: 1;
+    fill: white;
+  }
+  &.winner {
+  }
+  &.loser {
+  }
+  &.border0 {
+    fill-opacity: 0.1;
+    fill: $color_fai;
+    &.finished {
+      fill-opacity: 0;
+    }
+  }
+}
+path {
+  fill-opacity: 0;
+  stroke: $color-neutral;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+path.winner {
+  stroke: $color-winner;
+}
+
+text.winner {
+  fill: $color-winner;
+  font-weight: 500;
+}
+
+path.loser {
+  stroke: $color-loser;
+}
+
+
+text.loser {
+  fill: $color-loser;
+  text-decoration: line-through;
+}
+
+marker {
+  fill: $color-fai;
+}
+
