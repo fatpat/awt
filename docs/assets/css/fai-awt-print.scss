@@ -1,0 +1,16 @@
+---
+---
+section.page {
+  h1 {
+    page-break-before: always; /* chaque titre commence sur une nouvelle page */
+/*
+    &:first-child {
+      page-break-before: auto;
+    }
+*/
+  }
+}
+
+#page-header, .element-invisible, .pane-page-breadcrumb {
+  display: none;
+}
