@@ -216,6 +216,7 @@ function update_battle(battle, p1, s1, p2, s2) {
 
 // handle periodic fectching data from google drive
 function run_loop(interval) {
+
   window.setTimeout(function() {
     Papa.parse(url, {
       download: true,
@@ -360,13 +361,24 @@ function run_loop(interval) {
         $( '#result-p14' ).text(d[110][2]);
         $( '#result-p15' ).text(d[111][2]);
         $( '#result-p16' ).text(d[112][2]);
+
+        gtag('event', 'data', {
+          'event_label': 'Update',
+          'non_interaction': true
+        });
+
         
         // refresh data in 5s
         run_loop(5000);
       },
       error: function(error, file) {
         console.log("Parsing error:", error, file);
-        //run_loop(10000);
+
+        gtag('event', 'data', {
+          'event_label': 'Update',
+          'non_interaction': true
+        });
+        run_loop(10000);
       },
     });
   }, interval);
