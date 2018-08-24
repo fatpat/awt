@@ -218,6 +218,7 @@ function update_battle(battle, p1, s1, p2, s2) {
 function run_loop(interval) {
 
   window.setTimeout(function() {
+    gtag('config', 'UA-1246059-5');
     Papa.parse(url, {
       download: true,
       complete: function(results, file) {
@@ -362,22 +363,11 @@ function run_loop(interval) {
         $( '#result-p15' ).text(d[111][2]);
         $( '#result-p16' ).text(d[112][2]);
 
-        gtag('event', 'data', {
-          'event_label': 'Update',
-          'non_interaction': true
-        });
-
-        
         // refresh data in 5s
         run_loop(5000);
       },
       error: function(error, file) {
         console.log("Parsing error:", error, file);
-
-        gtag('event', 'data', {
-          'event_label': 'Update',
-          'non_interaction': true
-        });
         run_loop(10000);
       },
     });
