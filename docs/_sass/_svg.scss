@@ -14,41 +14,46 @@ div.svg {
 text {
   text-anchor: middle;
   fill: $color-active;
-
   font-family: 'ingra',sans-serif;
   font-weight: 200;
 
-  //text-transform: uppercase;
-}
+  &.title {
+    font-weight: bold;
+    font-size: 20px;
+    fill: $color-neutral;
+  }
 
-text.title {
-  font-weight: bold;
-  font-size: 20px;
-  fill: $color-neutral;
-}
+  &.title_run {
+    font-family: 'rift',sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    fill: $color_fai;
+  }
 
-text.title_run {
-  font-family: 'rift',sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-  fill: $color_fai;
-}
+  &.title_group {
+    font-family: 'rift',sans-serif;
+    font-weight: 700;
+    font-size: 40px;
+    fill: $color_fai;
+  }
 
-text {
   &.ongoing {
     fill: $color_active;
   }
+
   &.finished {
     fill: $color_fai;
   }
-}
 
-text.title_group {
-  font-family: 'rift',sans-serif;
-  font-weight: 700;
-  font-size: 40px;
-//  font-size: 3vw;
-  fill: $color_fai;
+  &.winner {
+    fill: $color-winner;
+    font-weight: 500;
+  }
+
+  &.loser {
+    fill: $color-loser;
+    text-decoration: line-through;
+  }
 }
 
 rect {
@@ -63,41 +68,52 @@ rect {
   &.loser {
   }
   &.border0 {
-    fill-opacity: 0.1;
-    fill: $color_fai;
+    stroke-dasharray: 5;
+    //fill-opacity: 0.1;
+    //fill: $color_fai;
     &.finished {
+      stroke-dasharray: 0;
       fill-opacity: 0;
     }
   }
+  &.quarter {
+    stroke-width: 1;
+  }
+  &.semi {
+    stroke-width: 2;
+  }
+  &.final {
+    stroke-width: 3;
+  }
 }
+
+
 path {
   fill-opacity: 0;
   stroke: $color-neutral;
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
 
-path.winner {
-  stroke: $color-winner;
-}
+  &.border {
+    fill-opacity: 0;
+    stroke-width: 2;
+  }
 
-text.winner {
-  fill: $color-winner;
-  font-weight: 500;
-}
-
-path.loser {
-  stroke: $color-loser;
-}
-
-
-text.loser {
-  fill: $color-loser;
-  text-decoration: line-through;
+  &.winner {
+    stroke: $color-winner;
+    &.border {
+      stroke: $color-fai;
+    }
+  }
+  &.loser {
+    stroke: $color-loser;
+    &.border {
+      stroke: $color-active;
+    }
+  }
 }
 
 marker {
   fill: $color-fai;
 }
-

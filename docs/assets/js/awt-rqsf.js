@@ -1,6 +1,5 @@
 var final_runs = {};
 var qlf_runs = {};
-var TABID = "1783068895";
 var url = "https://docs.google.com/a/loyet.net/spreadsheets/d/1si-AjcSVcKUKqHUqWiqmqdt2xPS1XMMPbjS8Fl3niaQ/export?gid=" + TABID + "&format=csv";
 
 // default values
@@ -11,27 +10,30 @@ var battle_sep_small = 10;
 var battle_sep_large = 30;
 
 // clone SVG battle
-function battle_clone(battle, name, x, y) {
+function battle_clone(battle, name, x, y, type = undefined) {
   var r = battle.clone().id(name);
   r.move(x,y);
   r.data('x', x)
   r.data('y', y);
   r.select('.title').first().text(name);
+  if (typeof(type) == "string") r.select('.border0').first().addClass(type);
   return r;
 }
 
 // Create battle to reuse later
 function create_battle(svg) {
   var battle = svg.group();
-  battle.rect(battle_width, battle_height).radius(10, 10).addClass('border0');
+  battle.rect(battle_width, battle_height).radius(10, 10).addClass('border').addClass('border0');
 
-  battle.rect(battle_width - 2*battle_sep_small, battle_sep_large).move(battle_sep_small, battle_sep_large).addClass('border1');
-  battle.text("Pilot #1").move(battle_width/2, battle_sep_small+battle_sep_large).addClass('pilot1');
+  //battle.rect(battle_width - 2*battle_sep_small, battle_sep_large).radius(5,5).move(battle_sep_small, battle_sep_large).addClass('border').addClass('border1');
+  battle.path("M20 34 h 180 q 10 0 10 10 v 15 l -10 10 h -180 l -10 -10 v -15 q 0 -10 10 -10").addClass('border').addClass('border1');
+  battle.text("Pilot #1").move(battle_width/2, 40).addClass('pilot1');
 
-  battle.rect(battle_width - 2*battle_sep_small, battle_sep_large).move(battle_sep_small, battle_height - battle_sep_large - battle_sep_small).addClass('border2');
-  battle.text("Pilot #2").move(battle_width/2, (battle_sep_small+battle_sep_large)*2).addClass('pilot2');
+  //battle.rect(battle_width - 2*battle_sep_small, battle_sep_large).radius(5,5).move(battle_sep_small, battle_height - battle_sep_large - battle_sep_small).addClass('border').addClass('border2');
+  battle.path("M20 70 h 180 l 10 10 v 15 q 0 10 -10 10 h -180 q -10 0 -10 -10 v -15 l 10 -10").addClass('border').addClass('border2');
+  battle.text("Pilot #2").move(battle_width/2, 78).addClass('pilot2');
 
-  battle.text("TITLE").move(battle_width/2, battle_sep_small).addClass('title');
+  battle.text("TITLE").move(battle_width/2, battle_sep_small/2).addClass('title');
 
   return battle;
 }
@@ -388,26 +390,27 @@ window.onload = function() {
   var battle = create_battle(finals);
 
   // create each battle from the battle
-  var Q1 = battle_clone(battle, 'Q1', battle_sep_large, battle_sep_small);
-  var Q2 = battle_clone(battle, 'Q2', finals.width()-battle_width-battle_sep_large, battle_sep_small);
-  var Q3 = battle_clone(battle, 'Q3', finals.width()-battle_width-battle_sep_large, battle_sep_small+battle_height+battle_sep_large);
-  var Q4 = battle_clone(battle, 'Q4', battle_sep_large, battle_sep_small+battle_height+battle_sep_large);
+  var Q1 = battle_clone(battle, 'Q1', battle_sep_large, battle_sep_small, "quarter");
+  var Q2 = battle_clone(battle, 'Q2', finals.width()-battle_width-battle_sep_large, battle_sep_small, "quarter");
+  var Q3 = battle_clone(battle, 'Q3', finals.width()-battle_width-battle_sep_large, battle_sep_small+battle_height+battle_sep_large, "quarter");
+  var Q4 = battle_clone(battle, 'Q4', battle_sep_large, battle_sep_small+battle_height+battle_sep_large, "quarter");
 
-  var F1 = battle_clone(battle, 'F1', (finals.width()-battle_width)/2, battle_sep_small);
-var F3 = battle_clone(battle, 'F3', (finals.width()-battle_width)/2, battle_sep_small + battle_height + battle_sep_large);
-  var F5 = battle_clone(battle, 'F5', (finals.width()-battle_width)/2, battle_sep_small + (battle_height + battle_sep_large)*2);
-  var F7 = battle_clone(battle, 'F7', (finals.width()-battle_width)/2, battle_sep_small + (battle_height + battle_sep_large)*3);
+  var F1 = battle_clone(battle, 'F1', (finals.width()-battle_width)/2, battle_sep_small, "final");
+  var F3 = battle_clone(battle, 'F3', (finals.width()-battle_width)/2, battle_sep_small + battle_height + battle_sep_large, "final");
+  var F5 = battle_clone(battle, 'F5', (finals.width()-battle_width)/2, battle_sep_small + (battle_height + battle_sep_large)*2, "final");
+  var F7 = battle_clone(battle, 'F7', (finals.width()-battle_width)/2, battle_sep_small + (battle_height + battle_sep_large)*3, "final");
 
   var semi_pad = ((finals.width() - battle_width)/2 - battle_width)/2 - battle_width/2 + battle_sep_large;
-  var S1 = battle_clone(battle, 'S1', battle_width + semi_pad, battle_sep_small + battle_height+battle_sep_large/2 -battle_height/2);
-  var S2 = battle_clone(battle, 'S2', finals.width() - battle_width*2 - semi_pad, battle_sep_small + battle_height+battle_sep_large/2 -battle_height/2);
+  var S1 = battle_clone(battle, 'S1', battle_width + semi_pad, battle_sep_small + battle_height+battle_sep_large/2 -battle_height/2, "semi");
+  var S2 = battle_clone(battle, 'S2', finals.width() - battle_width*2 - semi_pad, battle_sep_small + battle_height+battle_sep_large/2 -battle_height/2, "semi");
 
-  var C1 = battle_clone(battle, 'C1', battle_width + semi_pad, battle_sep_small + (battle_height+battle_sep_large)*3 - battle_sep_large/2 - battle_height/2);
-  var C2 = battle_clone(battle, 'C2', finals.width() - battle_width*2 - semi_pad, battle_sep_small + (battle_height+battle_sep_large)*3 - battle_sep_large/2 - battle_height/2);
+  var C1 = battle_clone(battle, 'C1', battle_width + semi_pad, battle_sep_small + (battle_height+battle_sep_large)*3 - battle_sep_large/2 - battle_height/2, "semi");
+  var C2 = battle_clone(battle, 'C2', finals.width() - battle_width*2 - semi_pad, battle_sep_small + (battle_height+battle_sep_large)*3 - battle_sep_large/2 - battle_height/2, "semi");
 
   // update text
   text(Q1, 1, "1st Group A");
   text(Q1, 2, "2nd Group O");
+  Q1.addClass("quarter");
 
   text(Q2, 1, "2nd Group A");
   text(Q2, 2, "1st Group O");
