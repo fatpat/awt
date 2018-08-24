@@ -162,9 +162,10 @@ function conn(svg, start_group, start_position, end_group, end_position) {
 
 function update_battle(battle, p1, s1, p2, s2) {
 
-  // convert string to int otherwise comparison will be wrong
-  s1 = parseInt(s1);
-  s2 = parseInt(s2);
+  // convert string to float otherwise comparison will be wrong
+  s1 = parseFloat(s1.replace(/,/, '.'));
+  s2 = parseFloat(s2.replace(/,/, '.'));
+
   if (isNaN(s1)) s1 = -1;
   if (isNaN(s2)) s2 = -1;
 
