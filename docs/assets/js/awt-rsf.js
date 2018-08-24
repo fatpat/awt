@@ -54,26 +54,7 @@ function run_loop(interval) {
           }
         }
 
-
-        // C1-C10
-/*
-        for (var i=0; i<10; i++) {
-          var x = 67;
-          var y = 4;
-          if (i == 1) { x=70; y=4; }
-          if (i == 2) { x=53; y=4; }
-          if (i == 3) { x=56; y=4; }
-          if (i == 4) { x=59; y=4; }
-          if (i == 5) { x=62; y=4; }
-          if (i == 6) { x=67; y=7; }
-          if (i == 7) { x=70; y=7; }
-          if (i == 8) { x=75; y=7; }
-          if (i == 9) { x=78; y=7; }
-          update_battle(final_runs["C" + (i+1)], d[x][y], d[x][y+1], d[x+1][y], d[x+1][y+1]);
-        }
-*/
-
-        // S1-S2
+        // S1-S2 C1-C6
         for (var i=0; i<8; i++) {
           var x = 53;
           var y = 1;
@@ -89,18 +70,17 @@ function run_loop(interval) {
           update_battle(final_runs[l], d[x][y], d[x][y+1], d[x+1][y], d[x+1][y+1]);
         }
 
-return;
         // F1,F3,F5,F7,F9,F11,F13,F15
         for (var i=0; i<8; i++) {
-          var x = 83;
+          var x = 68;
           var y = 1;
-          if (i == 1) { x=86; y=1; }
-          if (i == 2) { x=89; y=1; }
-          if (i == 3) { x=92; y=1; }
-          if (i == 4) { x=83; y=4; }
-          if (i == 5) { x=86; y=4; }
-          if (i == 6) { x=89; y=4; }
-          if (i == 7) { x=92; y=4; }
+          if (i == 1) { x=71; y=1; }
+          if (i == 2) { x=74; y=1; }
+          if (i == 3) { x=77; y=1; }
+          if (i == 4) { x=68; y=4; }
+          if (i == 5) { x=71; y=4; }
+          if (i == 6) { x=74; y=4; }
+          if (i == 7) { x=77; y=4; }
           update_battle(final_runs["F" + (i*2 + 1)], d[x][y], d[x][y+1], d[x+1][y], d[x+1][y+1]);
         }
 
@@ -132,22 +112,22 @@ return;
         // ** final runs **
 
         // ** final results **
-        $( '#result-p1' ).text(d[97][2]);
-        $( '#result-p2' ).text(d[98][2]);
-        $( '#result-p3' ).text(d[99][2]);
-        $( '#result-p4' ).text(d[100][2]);
-        $( '#result-p5' ).text(d[101][2]);
-        $( '#result-p6' ).text(d[102][2]);
-        $( '#result-p7' ).text(d[103][2]);
-        $( '#result-p8' ).text(d[104][2]);
-        $( '#result-p9' ).text(d[105][2]);
-        $( '#result-p10' ).text(d[106][2]);
-        $( '#result-p11' ).text(d[107][2]);
-        $( '#result-p12' ).text(d[108][2]);
-        $( '#result-p13' ).text(d[109][2]);
-        $( '#result-p14' ).text(d[110][2]);
-        $( '#result-p15' ).text(d[111][2]);
-        $( '#result-p16' ).text(d[112][2]);
+        $( '#result-p1' ).text(d[82][2]);
+        $( '#result-p2' ).text(d[83][2]);
+        $( '#result-p3' ).text(d[84][2]);
+        $( '#result-p4' ).text(d[85][2]);
+        $( '#result-p5' ).text(d[86][2]);
+        $( '#result-p6' ).text(d[87][2]);
+        $( '#result-p7' ).text(d[88][2]);
+        $( '#result-p8' ).text(d[89][2]);
+        $( '#result-p9' ).text(d[90][2]);
+        $( '#result-p10' ).text(d[91][2]);
+        $( '#result-p11' ).text(d[92][2]);
+        $( '#result-p12' ).text(d[93][2]);
+        $( '#result-p13' ).text(d[94][2]);
+        $( '#result-p14' ).text(d[95][2]);
+        $( '#result-p15' ).text(d[96][2]);
+        $( '#result-p16' ).text(d[97][2]);
 
         // refresh data in 5s
         run_loop(loop_interval);
