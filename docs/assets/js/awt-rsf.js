@@ -6,7 +6,7 @@ function run_loop(interval) {
     Papa.parse(url, {
       download: true,
       complete: function(results, file) {
-        //console.log("Parsing complete:", results, file);
+        console.log("Parsing complete:", results, file);
         var d = results.data;
 
         $('p.section').addClass('animated').addClass('bounce');
@@ -54,16 +54,9 @@ function run_loop(interval) {
           }
         }
 
-        // quarters
-        for (var q=0; q<4; q++) {
-          var x = 53;
-          if (q == 1) x = 56;
-          if (q == 2) x = 59;
-          if (q == 3) x = 62;
-          update_battle(final_runs["Q" + (q+1)], d[x][1], d[x][2], d[x+1][1], d[x+1][2]);
-        }
 
         // C1-C10
+/*
         for (var i=0; i<10; i++) {
           var x = 67;
           var y = 4;
@@ -78,16 +71,25 @@ function run_loop(interval) {
           if (i == 9) { x=78; y=7; }
           update_battle(final_runs["C" + (i+1)], d[x][y], d[x][y+1], d[x+1][y], d[x+1][y+1]);
         }
-
+*/
 
         // S1-S2
-        for (var i=0; i<2; i++) {
-          var x = 67;
+        for (var i=0; i<8; i++) {
+          var x = 53;
           var y = 1;
-          if (i == 1) { x=70; y=1; }
-          update_battle(final_runs["S" + (i+1)], d[x][y], d[x][y+1], d[x+1][y], d[x+1][y+1]);
+          var l = "S1";
+          if (i == 0) { x=53; y=1; l="S1"}
+          if (i == 1) { x=56; y=1; l="S2"}
+          if (i == 2) { x=60; y=1; l="C1"}
+          if (i == 3) { x=63; y=1; l="C2"}
+          if (i == 4) { x=53; y=4; l="C3"}
+          if (i == 5) { x=56; y=4; l="C4"}
+          if (i == 6) { x=60; y=4; l="C5"}
+          if (i == 7) { x=63; y=4; l="C6"}
+          update_battle(final_runs[l], d[x][y], d[x][y+1], d[x+1][y], d[x+1][y+1]);
         }
 
+return;
         // F1,F3,F5,F7,F9,F11,F13,F15
         for (var i=0; i<8; i++) {
           var x = 83;
@@ -166,54 +168,64 @@ window.onload = function() {
   }
 
   // init SVG for '1st to 8th finals'
-  var finals = SVG('svg-finals-1-8').size(1360, 550).viewbox(0,0,1360,550);
+  var finals = SVG('svg-finals-runs').size(770, 1110).viewbox(0,0,770,1110);
 
   // Create battle to reuse later
   var battle = create_battle(finals);
 
   // create each battle from the battle
-  var Q1 = battle_clone(battle, 'Q1', battle_sep_large, battle_sep_small, "quarter");
-  var Q2 = battle_clone(battle, 'Q2', finals.width()-battle_width-battle_sep_large, battle_sep_small, "quarter");
-  var Q3 = battle_clone(battle, 'Q3', finals.width()-battle_width-battle_sep_large, battle_sep_small+battle_height+battle_sep_large, "quarter");
-  var Q4 = battle_clone(battle, 'Q4', battle_sep_large, battle_sep_small+battle_height+battle_sep_large, "quarter");
 
-  var F1 = battle_clone(battle, 'F1', (finals.width()-battle_width)/2, battle_sep_small, "final");
-  var F3 = battle_clone(battle, 'F3', (finals.width()-battle_width)/2, battle_sep_small + battle_height + battle_sep_large, "final");
-  var F5 = battle_clone(battle, 'F5', (finals.width()-battle_width)/2, battle_sep_small + (battle_height + battle_sep_large)*2, "final");
-  var F7 = battle_clone(battle, 'F7', (finals.width()-battle_width)/2, battle_sep_small + (battle_height + battle_sep_large)*3, "final");
+  var x = (finals.width()-battle_width)/2;
+  var y = function(n) {return battle_sep_small + (battle_height + battle_sep_large)*(n-1); };
+  var F1  = battle_clone(battle, 'F1',  x, y(1), "final");
+  var F3  = battle_clone(battle, 'F3',  x, y(2), "final");
+  var F5  = battle_clone(battle, 'F5',  x, y(3), "final");
+  var F7  = battle_clone(battle, 'F7',  x, y(4), "final");
+  var F9  = battle_clone(battle, 'F9',  x, y(5), "final");
+  var F11 = battle_clone(battle, 'F11', x, y(6), "final");
+  var F13 = battle_clone(battle, 'F13', x, y(7), "final");
+  var F15 = battle_clone(battle, 'F15', x, y(8), "final");
 
-  var semi_pad = ((finals.width() - battle_width)/2 - battle_width)/2 - battle_width/2 + battle_sep_large;
-  var S1 = battle_clone(battle, 'S1', battle_width + semi_pad, battle_sep_small + battle_height+battle_sep_large/2 -battle_height/2, "semi");
-  var S2 = battle_clone(battle, 'S2', finals.width() - battle_width*2 - semi_pad, battle_sep_small + battle_height+battle_sep_large/2 -battle_height/2, "semi");
+  var x1 = battle_sep_small;
+  var x2 = finals.width() - battle_width - battle_sep_small;
+  var y = function(n) { return battle_sep_small + 2*(battle_height + battle_sep_large)*(n-1) + battle_height + battle_sep_large/2 - battle_height/2; };
 
-  var C1 = battle_clone(battle, 'C1', battle_width + semi_pad, battle_sep_small + (battle_height+battle_sep_large)*3 - battle_sep_large/2 - battle_height/2, "semi");
-  var C2 = battle_clone(battle, 'C2', finals.width() - battle_width*2 - semi_pad, battle_sep_small + (battle_height+battle_sep_large)*3 - battle_sep_large/2 - battle_height/2, "semi");
+  var S1 = battle_clone(battle, 'S1', x1, y(1), "semi");
+  var S2 = battle_clone(battle, 'S2', x2, y(1), "semi");
+
+  var C1 = battle_clone(battle, 'C1', x1, y(2), "semi");
+  var C2 = battle_clone(battle, 'C2', x2, y(2), "semi");
+
+  var C3 = battle_clone(battle, 'C3', x1, y(3), "semi");
+  var C4 = battle_clone(battle, 'C4', x2, y(3), "semi");
+
+  var C5 = battle_clone(battle, 'C5', x1, y(4), "semi");
+  var C6 = battle_clone(battle, 'C6', x2, y(4), "semi");
 
   // update text
-  text(Q1, 1, "1st Group A");
-  text(Q1, 2, "2nd Group O");
-  Q1.addClass("quarter");
+  text(S1, 1, "1st Group A");
+  text(S1, 2, "1st Group O");
 
-  text(Q2, 1, "2nd Group A");
-  text(Q2, 2, "1st Group O");
+  text(S2, 1, "1st Group C");
+  text(S2, 2, "1st Group R");
 
-  text(Q3, 1, "1st Group C");
-  text(Q3, 2, "2nd Group R");
+  text(C1, 1, "2nd Group A");
+  text(C1, 2, "2nd Group O");
 
-  text(Q4, 1, "2nd Group C");
-  text(Q4, 2, "1st Group R");
+  text(C2, 1, "2nd Group C");
+  text(C2, 2, "2nd Group R");
 
-  text(S1, 1, "Winner Q1");
-  text(S1, 2, "Winner Q4");
+  text(C3, 1, "3rd Group A");
+  text(C3, 2, "3rd Group O");
 
-  text(S2, 1, "Winner Q2");
-  text(S2, 2, "Winner Q3");
+  text(C4, 1, "3rd Group C");
+  text(C4, 2, "3rd Group R");
 
-  text(C1, 1, "Loser Q1");
-  text(C1, 2, "Loser Q4");
+  text(C5, 1, "4th Group A");
+  text(C5, 2, "4th Group O");
 
-  text(C2, 1, "Loser Q2");
-  text(C2, 2, "Loser Q3");
+  text(C6, 1, "4th Group C");
+  text(C6, 2, "4th Group R");
 
   text(F1, 1, "Winner S1");
   text(F1, 2, "Winner S2");
@@ -227,94 +239,47 @@ window.onload = function() {
   text(F7, 1, "Loser C1");
   text(F7, 2, "Loser C2");
 
+  text(F9, 1, "Winner C3");
+  text(F9, 2, "Winner C4");
+
+  text(F11, 1, "Loser C3");
+  text(F11, 2, "Loser C4");
+
+  text(F13, 1, "Winner C5");
+  text(F13, 2, "Winner C6");
+
+  text(F15, 1, "Loser C5");
+  text(F15, 2, "Loser C6");
+
   // remove as it's not necessary anymore
   battle.remove();
 
 
   // draw connections
-  conn(finals, Q1, "right", S1, "top-left").addClass("winner");
-  conn(finals, Q4, "right", S1, "bottom-left").addClass("winner");
-  conn(finals, Q2, "left", S2, "top-right").addClass("winner");
-  conn(finals, Q3, "left", S2, "bottom-right").addClass("winner");
+  conn(finals, S1, "top-right",    F1, "left" ).addClass("winner");
+  conn(finals, S2, "top-left",     F1, "right").addClass("winner");
+  conn(finals, S1, "bottom-right", F3, "left" ).addClass("loser");
+  conn(finals, S2, "bottom-left",  F3, "right").addClass("loser");
 
-  conn(finals, S1, "top-right", F1, "left").addClass("winner");
-  conn(finals, S2, "top-left", F1, "right").addClass("winner");
-  conn(finals, S1, "bottom-right", F3, "left").addClass("loser");
-  conn(finals, S2, "bottom-left", F3, "right").addClass("loser");
+  conn(finals, C1, "top-right",    F5, "left" ).addClass("winner");
+  conn(finals, C2, "top-left",     F5, "right").addClass("winner");
+  conn(finals, C1, "bottom-right", F7, "left" ).addClass("loser");
+  conn(finals, C2, "bottom-left",  F7, "right").addClass("loser");
 
-  conn(finals, C1, "top-right", F5, "left").addClass("winner");
-  conn(finals, C2, "top-left", F5, "right").addClass("winner");
-  conn(finals, C1, "bottom-right", F7, "left").addClass("loser");
-  conn(finals, C2, "bottom-left", F7, "right").addClass("loser");
+  conn(finals, C3, "top-right",    F9, "left" ).addClass("winner");
+  conn(finals, C4, "top-left",     F9, "right").addClass("winner");
+  conn(finals, C3, "bottom-right", F11,"left" ).addClass("loser");
+  conn(finals, C4, "bottom-left",  F11, "right").addClass("loser");
 
-  conn(finals, Q1, "left", C1, "left").addClass("loser");
-  conn(finals, Q4, "left", C1, "left").addClass("loser");
-  conn(finals, Q2, "right", C2, "right").addClass("loser");
-  conn(finals, Q3, "right", C2, "right").addClass("loser");
+  conn(finals, C5, "top-right",    F13, "left" ).addClass("winner");
+  conn(finals, C6, "top-left",     F13, "right").addClass("winner");
+  conn(finals, C5, "bottom-right", F15, "left" ).addClass("loser");
+  conn(finals, C6, "bottom-left",  F15, "right").addClass("loser");
 
 
-  // clone div#svg-finals-1-8 into section#finals-9-16
-  $("#svg-finals-1-8").clone().appendTo("#finals-9-16");
-  // update IDs
-  $("#finals-9-16 > div").attr('id', "div-svg-finals-9-16");
-  $("#finals-9-16 > div > svg").attr('id', "svg-finals-9-16");
-
-  // got cloned SVG
-  finals2 = SVG.select('#svg-finals-9-16').first();
-
-  // rename battles
-  var C3  = rename_battle(finals2, "Q1", "C3");
-  var C4  = rename_battle(finals2, "Q2", "C4");
-  var C5  = rename_battle(finals2, "Q3", "C5");
-  var C6  = rename_battle(finals2, "Q4", "C6");
-  var C9  = rename_battle(finals2, "S1", "C9");
-  var C10 = rename_battle(finals2, "S2", "C10");
-  var C7  = rename_battle(finals2, "C1", "C7");
-  var C8  = rename_battle(finals2, "C2", "C8");
-  var F9  = rename_battle(finals2, "F1", "F9");
-  var F11 = rename_battle(finals2, "F3", "F11");
-  var F13 = rename_battle(finals2, "F5", "F13");
-  var F15 = rename_battle(finals2, "F7", "F15");
-
-  // update pilot's name
-  text(C3, 1, "3rd Group A");
-  text(C3, 2, "4th Group O");
-
-  text(C4, 1, "4th Group A");
-  text(C4, 2, "3rd Group O");
-
-  text(C5, 1, "3rd Group C");
-  text(C5, 2, "4th Group R");
-
-  text(C6, 1, "4th Group C");
-  text(C6, 2, "3rd Group R");
-
-  text(C7, 1, "Loser C3");
-  text(C7, 2, "Loser C6");
-
-  text(C8, 1, "Loser C4");
-  text(C8, 2, "Loser C5");
-
-  text(C9, 1, "Winner C3");
-  text(C9, 2, "Winner C6");
-
-  text(C10, 1, "Winner C4");
-  text(C10, 2, "Winner C5");
-
-  text(F9, 1, "Winner C9");
-  text(F9, 2, "Winner C10");
-
-  text(F11, 1, "Loser C9");
-  text(F11, 2, "Loser C10");
-
-  text(F13, 1, "Winner C7");
-  text(F13, 2, "Winner C8");
-
-  text(F15, 1, "Loser C7");
-  text(F15, 2, "Loser C8");
 
   // save each battle
-  final_runs = {C1:C1,C2:C2,C3:C3,C4:C4,C5:C5,C6:C6,C7:C7,C8:C8,C9:C9,C10:C10,Q1:Q1,Q2:Q2,Q3:Q3,Q4:Q4,S1:S1,S2:S2,F1:F1,F3:F3,F5:F5,F7:F7,F9:F9,F11:F11,F13:F13,F15:F15};
+  final_runs = {C1:C1,C2:C2,C3:C3,C4:C4,C5:C5,C6:C6,S1:S1,S2:S2,F1:F1,F3:F3,F5:F5,F7:F7,F9:F9,F11:F11,F13:F13,F15:F15};
 
 
   // Create qualification runs
