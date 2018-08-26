@@ -201,7 +201,13 @@ function update_battle(battle, p1, s1, p2, s2) {
     return 0; // battle has not happened yet
   }
 
-  if (s1 > s2) {
+  if (s1 == s2) {
+    t1.removeClass("loser").addClass("winner");
+    b1.removeClass("loser").addClass("winner");
+
+    t2.removeClass("loser").addClass("winner");
+    b2.removeClass("loser").addClass("winner");
+  } else if (s1 > s2) {
     t1.removeClass("loser").addClass("winner");
     b1.removeClass("loser").addClass("winner");
 
