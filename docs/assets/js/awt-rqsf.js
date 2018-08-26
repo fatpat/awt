@@ -148,11 +148,11 @@ function run_loop(interval) {
         $( '#result-p16' ).text(d[112][2]);
 
         // refresh data in 5s
-        run_loop(loop_interval);
+        // run_loop(loop_interval);
       },
       error: function(error, file) {
         console.log("Parsing error:", error, file);
-        run_loop(loop_interval_error);
+        // run_loop(loop_interval_error);
       },
     });
   }, interval);
