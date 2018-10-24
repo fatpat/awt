@@ -8,6 +8,7 @@ function run_slideshow() {
 
   $('#page-header').hide();
   $('.breadcrumb-wrapper').hide();
+  $('#page-footer').hide();
 
   for (var i=0; i<sections.length; i++) {
     $(sections[i]).hide();
