@@ -1,3 +1,29 @@
+// slideshow handling
+
+var sections = ["#groups", "#qualification-runs", "#qualification-results", "#finals", "#finals-results"];
+var sections_i = 0;
+var slideshow_timeout = 20;
+
+function run_slideshow() {
+
+  $('#page-header').hide();
+  $('.breadcrumb-wrapper').hide();
+
+  for (var i=0; i<sections.length; i++) {
+    $(sections[i]).hide();
+  }
+
+  $(sections[sections_i]).show();
+
+  sections_i = (sections_i + 1) % sections.length;
+  
+  window.setTimeout(function() {
+    run_slideshow();
+  }, slideshow_timeout * 1000);
+}
+
+
+
 // handle periodic fectching data from google drive
 function run_loop(interval) {
 
@@ -261,5 +287,7 @@ window.onload = function() {
   // run main loop that will fetch data and update the current page
   run_loop(0);
 
-  //$( 'rect' ).click(function() { run_loop(0); });
+  if (window.location.href.match(/#slideshow$/)) {
+    run_slideshow();
+  }
 };
