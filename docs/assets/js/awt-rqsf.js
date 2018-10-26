@@ -117,6 +117,21 @@ function run_loop(interval) {
             $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') th.name').text(d[23 + (g * 5) + p][10]);
             for (var r=0; r<3; r++) {
               var e = $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') td.run' + (r + 1));
+              if (d[23 + (g * 5) + p][16 + r] == "") {
+                e.text('-');
+                e.removeClass('loser').removeClass('winner');
+              } else if (d[23 + (g * 5) + p][12 + r] == "FALSE") {
+                e.text('Lose');
+                e.removeClass('winner').addClass('loser');
+              } else {
+                e.text('Win');
+                e.removeClass('loser').addClass('winner');
+              }
+            }
+
+/*
+            for (var r=0; r<3; r++) {
+              var e = $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') td.run' + (r + 1));
               e.text(d[23 + (g * 5) + p][16 + r]);
               if (d[23 + (g * 5) + p][12 + r] == "FALSE") {
                 e.removeClass('winner').addClass('loser');
@@ -125,6 +140,7 @@ function run_loop(interval) {
               }
             }
             $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') td.average').text(d[23 + (g * 5) + p][19]);
+*/
           }
         }
 
