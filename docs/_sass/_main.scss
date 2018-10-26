@@ -22,3 +22,11 @@ section.page {
 #finals-9-16 {
   display: none;
 }
+
+.winner {
+  color: $color-winner;
+}
+
+.loser {
+  color: $color-loser;
+}

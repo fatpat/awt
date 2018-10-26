@@ -171,7 +171,7 @@ function update_battle(battle, p1, s1, p2, s2) {
 
 //  if (battle.attr('id').match(/^A/)) console.log("Update " + battle.attr('id') + " " + p1 + "/" + s1 + "  " + p2 + "/" + s2);
 
-  var t1 = battle.select('.pilot1').first().text(p1);
+  var t1 = battle.select('.pilot1').first().text(s1 > 0 ? p1 + " (" + s1 + ")" : p1);
   var b1 = battle.select('.border1').first();
   if (p1.match(/(loser|winner|group)/i)) {
     b1.removeClass("announced");
@@ -179,7 +179,7 @@ function update_battle(battle, p1, s1, p2, s2) {
     b1.addClass("announced");
   }
 
-  var t2 = battle.select('.pilot2').first().text(p2);
+  var t2 = battle.select('.pilot2').first().text(s2 > 0 ? p2 + " (" + s2 + ")" : p2);
   var b2 = battle.select('.border2').first();
   if (p2.match(/(loser|winner|group)/i)) {
     b2.removeClass("announced");

@@ -1,10 +1,17 @@
 // slideshow handling
 
-var sections = ["#groups", "#qualification-runs", "#qualification-results", "#finals", "#finals-results"];
+var sections = ["#groups", "#qualification-runs", "#qualification-table", "#qualification-results", "#finals", "#finals-results"];
 var sections_i = 0;
 var slideshow_timeout = 20;
+var slideshow = false;
+var d = {};
 
 function run_slideshow() {
+
+//  $('.content-wrapper').css("maxWidth", "100%");
+//  $('.node').css("padding-left", "0");
+
+//  console.log(sections_i, sections);
 
   $('#page-header').hide();
   $('.breadcrumb-wrapper').hide();
@@ -14,13 +21,14 @@ function run_slideshow() {
     $(sections[i]).hide();
   }
 
-  $(sections[sections_i]).show();
+  var skip = sections[sections_i].length == 0;
+  if (!skip) $(sections[sections_i]).show();
 
   sections_i = (sections_i + 1) % sections.length;
-  
+
   window.setTimeout(function() {
     run_slideshow();
-  }, slideshow_timeout * 1000);
+  }, skip ? 10 : slideshow_timeout * 1000);
 }
 
 
@@ -34,9 +42,36 @@ function run_loop(interval) {
       download: true,
       complete: function(results, file) {
 //        console.log("Parsing complete:", results, file);
-        var d = results.data;
+        d = results.data;
 
         $('p.section').addClass('animated').addClass('bounce');
+
+
+
+        if (d[10][4] == "FALSE") {
+          sections[3] = '';
+          if (!slideshow) $('#qualification-results').hide();
+        } else {
+          sections[3] = '#qualification-results';
+          if (!slideshow) $('#qualification-results').show();
+        }
+
+        if (d[11][4] == "FALSE") {
+          sections[4] = '';
+          if (!slideshow) $('#finals').hide();
+        } else {
+          sections[4] = '#finals';
+          if (!slideshow) $('#finals').show();
+        }
+
+
+        if (d[12][4] == "FALSE") {
+          sections[5] = '';
+          if (!slideshow) $('#finals-results').hide();
+        } else {
+          sections[5] = '#finals-results';
+          if (!slideshow) $('#finals-results').show();
+        }
 
         // ** Groups **
         // Group A
@@ -72,6 +107,24 @@ function run_loop(interval) {
             if (i>=4) y = 7;
 
             update_battle(qlf_runs[l + (i+1)], d[x + (i%2)*2][y], d[x + (i%2)*2][y+1], d[x + (i%2*2) + 1][y], d[x + (i%2)*2 + 1][y+1]);
+          }
+        }
+
+
+        // ** qualification table **
+        for (var g=0; g<3; g++) {
+          for (var p=0; p<4; p++) {
+            $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') th.name').text(d[23 + (g * 5) + p][10]);
+            for (var r=0; r<3; r++) {
+              var e = $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') td.run' + (r + 1));
+              e.text(d[23 + (g * 5) + p][16 + r]);
+              if (d[23 + (g * 5) + p][12 + r] == "FALSE") {
+                e.removeClass('winner').addClass('loser');
+              } else {
+                e.removeClass('loser').addClass('winner');
+              }
+            }
+            $('#qualification-table table:nth-child(' + (g + 1) + ') tbody tr:nth-child(' + (p + 1) + ') td.average').text(d[23 + (g * 5) + p][19]);
           }
         }
 
@@ -285,10 +338,13 @@ window.onload = function() {
   // save runs
   qlf_runs = {A1:A1,A2:A2,A3:A3,A4:A4,A5:A5,A6:A6,C1:C1,C2:C2,C3:C3,C4:C4,C5:C5,C6:C6,R1:R1,R2:R2,R3:R3,R4:R4,R5:R5,R6:R6}
 
+
+  if (window.location.href.match(/#slideshow$/)) {
+    slideshow = true;
+    run_slideshow();
+  }
+
   // run main loop that will fetch data and update the current page
   run_loop(0);
 
-  if (window.location.href.match(/#slideshow$/)) {
-    run_slideshow();
-  }
 };
